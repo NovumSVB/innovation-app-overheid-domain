@@ -1,0 +1,9 @@
+{
+	"name" : "novum/domain-overheid",
+	"type" : "novum-domain",
+	"stability" : "dev",
+	"require" : {
+		"novum/innovation-app-core" : "*",
+		"hurah/hurah-installer" :  "*"
+	}
+}

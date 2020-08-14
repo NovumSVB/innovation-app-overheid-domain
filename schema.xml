@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="hurah" custom="NovumOverheid" crudRoot="Custom/NovumOverheid" crudNamespace="Crud\Custom\NovumOverheid" defaultIdMethod="native" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://novumgit.gitlab.io/innovation-app-schema-xsd/v1/schema-plus-crud.xsd" >
+
+    <modules>
+        <module title="Een overheid" icon="building" name="Services"/>
+        <module title="Levensloop" icon="building" name="Lifeevents"/>
+    </modules>
+
+    <external-schema filename="../../schema/novum-schema.xml" />
+    <external-schema filename="../../schema/core-schema-extra.xml"/>
+    <external-schema filename="../../schema/core-schema.xml"/>
+
+
+    <table name="available_services" module="Services" title="Beschikbare diensten" phpName="AvailableServices" namespace="Model\Custom\NovumOverheid" apiExposed="true" apiDesc="Alle beschikbare overheidsdiensten.">
+        <column name="id" icon="tag" title="Id" form="INTEGER" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="datasource_id" lookupVisible="Model\System\DataSource.Titel"  form="LOOKUP" title="Databron" icon="globe" type="INTEGER" required="true"/>
+        <column name="title" title="Titel" form="STRING" icon="tag" required="true" />
+        <column name="intro_text" form="TEXTAREA" type="LONGVARCHAR" title="Omschrijving" icon="info" required="true"/>
+
+        <column name="definitie_url" title="Definitie url" form="STRING" icon="globe" required="true" />
+        <column name="collectie_url" title="Collectie url" form="STRING" icon="globe" required="true" />
+        <column name="item_url" title="Item url" form="STRING" icon="globe" required="true" />
+
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="logging" module="Services" title="Logging" phpName="Logging" namespace="Model\Custom\NovumOverheid" apiExposed="true" apiDesc="Alle beschikbare overheidsdiensten.">
+        <column name="id" icon="tag" title="Id" form="INTEGER" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="datasource_id" lookupVisible="Model\System\DataSource.Titel"  form="LOOKUP" title="Databron" icon="globe" type="INTEGER" required="true"/>
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="life_event" module="Lifeevents" title="Life event" phpName="LifeEvent" namespace="Model\Custom\NovumOverheid" apiExposed="true" apiDesc="Levensgebeurtenissen.">
+        <column name="id" icon="tag" title="Id" form="INTEGER" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="event_name" title="Gebeurtenis" form="STRING" icon="tag" required="true" />
+        <column name="code" title="Afkorting, read-only" form="STRING" icon="tag" required="true" />
+        <column name="endpoint_id" lookupVisible="Model\System\DataSource.titel" title="Herkomst" form="LOOKUP" icon="tag" required="false" />
+
+        <unique name="uq_code">
+            <unique-column name="code"/>
+        </unique>
+
+        <behavior name="timestampable"/>
+    </table>
+    <table name="life_event_listener" module="LifeEvent" title="Life event listeners" phpName="LifeEventListener" namespace="Model\Custom\NovumOverheid" apiExposed="true" apiDesc="Levensgebeurtenis ontvangers">
+        <column name="id" icon="tag" title="Id" form="INTEGER" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="life_event_id" lookupVisible="Model\Custom\NovumOverheid\LifeEvent.eventName" type="INTEGER" title="Gebeurtenis" form="LOOKUP" icon="flash" required="true" />
+        <column name="datasource_endpoint_id" lookupVisible="Model\System\DataSource.itemUrl" type="INTEGER" title="Bestemming" form="LOOKUP" icon="globe" required="true" />
+        <column name="message_translation_id" lookupVisible="Model\Custom\NovumOverheid\MessageTranslation.title" type="INTEGER" title="Bericht vertaling / mapping" form="LOOKUP" icon="globe" required="true" />
+
+        <foreign-key foreignTable="life_event" onDelete="restrict">
+            <reference local="life_event_id" foreign="id"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="datasource_endpoint" onDelete="restrict">
+            <reference local="datasource_endpoint_id" foreign="id"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="message_translation" onDelete="restrict">
+            <reference local="message_translation_id" foreign="id"/>
+        </foreign-key>
+
+
+        <behavior name="timestampable"/>
+    </table>
+
+
+</database>
