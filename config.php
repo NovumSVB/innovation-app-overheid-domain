@@ -1,5 +1,4 @@
 <?php
-use Core\Cfg;
 
 /***
 * This file is generated, please do not modify manually.
@@ -30,6 +29,6 @@ else
 }
 
 $aConfig['CUSTOM_NAMESPACE'] = 'NovumOverheid';
+return $aConfig;
 
-Cfg::set($aConfig);
 
