@@ -1,7 +1,4 @@
 <?php
-require_once '../../../../vendor/autoload.php';
-require_once '../../../../config/novum.overheid/propel/config.php';
-require_once '../../../../config/novum.overheid/config.php';
 $servicename = 'overheid';
 $password = 'Mkwhwm!2020'; // Makkelijker kunnen we het wel maken!
 
