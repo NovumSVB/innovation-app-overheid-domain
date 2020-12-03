@@ -1,7 +1,5 @@
 <?php
 
-require_once '0_always_runs.php';
-
 use Model\System\DataSourceQuery;
 
 $aDataSources = [
